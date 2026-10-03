@@ -35,7 +35,7 @@ import winsound
 
 import requests
 from _data import GOODBYE_DPI_EXECUTABLE, GOODCHECK_PATH, PARAMETER_MAPPING, PROXIFYRE_FILES_LIST, S_PARAMETER_MAPPING, S_VALUE_PARAMETERS, VALUE_PARAMETERS, ZAPRET_EXECUTABLE, ZAPRET_PATH, \
-    GOODBYE_DPI_PATH, DEBUG, DIRECTORY, DEBUG_PATH, REPO_NAME, REPO_OWNER, CONFIGS_REPO_NAME, SETTINGS_FILE_PATH,\
+    GOODBYE_DPI_PATH, DEBUG, DIRECTORY, DEBUG_PATH, REPO_NAME, REPO_OWNER, CONFIGS_REPO, SETTINGS_FILE_PATH,\
     CONFIG_PATH, SPOOFDPI_EXECUTABLE, BYEDPI_EXECUTABLE, EXECUTABLES, COMPONENTS_URLS, REQUEST_HEADER, text, settings
 
 def error_sound():
@@ -559,7 +559,9 @@ def save_version_data_to_cache(owner, name, object='prg', url='releases/latest')
     return True
 
 def get_latest_release(reason:Literal['auto', 'manual']='auto'):
-    url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/releases/latest"
+    # Update repo is not set (see UPDATE_REPO in _data.py): updater is disabled, nothing is requested
+    if not REPO_OWNER or not REPO_NAME:
+        return 'ERR_UPDATE_REPO_NOT_SET'
     
     if settings.get_value('CACHE', 'prg_update_check_time') != datetime.now().strftime("%d.%m.%Y") or \
         not os.path.exists(f'{DIRECTORY}tempfiles/versiondata_{REPO_OWNER}_{REPO_NAME}.json') or \
@@ -576,6 +578,9 @@ def get_latest_release(reason:Literal['auto', 'manual']='auto'):
     return latest_version
 
 def get_release_info(version="", repo_owner=REPO_OWNER, repo_name=REPO_NAME, component_name="prg"):
+    if not repo_owner or not repo_name:
+        return 'ERR_UPDATE_REPO_NOT_SET'
+    
     if settings.get_value('CACHE', 'prg_update_check_time') != datetime.now().strftime("%d.%m.%Y") or \
         not os.path.exists(f'{DIRECTORY}tempfiles/versiondata_{repo_owner}_{repo_name}.json'):
         code = save_version_data_to_cache(repo_owner, repo_name, object=component_name)
@@ -588,6 +593,8 @@ def get_release_info(version="", repo_owner=REPO_OWNER, repo_name=REPO_NAME, com
     return data
 
 def get_download_url(version, filetype=".zip", debug_check=True):
+    if not REPO_OWNER or not REPO_NAME:
+        return 'ERR_UPDATE_REPO_NOT_SET'
     if DEBUG and debug_check: return "patch.cdpipatch"
     try:
         data = get_release_info(version)
@@ -787,7 +794,7 @@ def extract_zip(zip_file, zip_folder_to_unpack, extract_to, files_to_skip=[]):
         return "ERR_FILE_UNPACKING"
 
 def download_files_from_github(remote_dir, local_dir, skip_exist=True):
-    base_url = f"https://api.github.com/repos/{REPO_OWNER}/{CONFIGS_REPO_NAME}/contents/{remote_dir}?ref=main"
+    base_url = f"https://api.github.com/repos/{CONFIGS_REPO}/contents/{remote_dir}?ref=main"
     headers = {'Accept': 'application/vnd.github.v3.raw'}
     
     skip_files = [

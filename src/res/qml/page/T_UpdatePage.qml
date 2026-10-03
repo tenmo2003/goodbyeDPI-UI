@@ -777,12 +777,17 @@ ScrollablePage {
     }
 
     function showWhatsNew() {
-        Qt.openUrlExternally("https://github.com/Storik4pro/goodbyeDPI-UI/releases/latest")
+        // Release pages are opened from the update repo of this fork; nothing to open while it is not set
+        var repoUrl = backend.get_update_repo_url()
+        if (repoUrl === "") return
+        Qt.openUrlExternally(repoUrl+"/releases/latest")
     }
 
     function showWhatsNewCurrentVersion() {
+        var repoUrl = backend.get_update_repo_url()
+        if (repoUrl === "") return
         var version = backend.get_version()
-        Qt.openUrlExternally("https://github.com/Storik4pro/goodbyeDPI-UI/releases/tag/"+version)
+        Qt.openUrlExternally(repoUrl+"/releases/tag/"+version)
     }
 
     Connections {

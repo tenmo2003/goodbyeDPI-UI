@@ -176,9 +176,19 @@ PRESETS_DEFAULT = {
     'zapret' : 3,
 }
 
-REPO_OWNER = "Storik4pro"
-REPO_NAME = "goodbyeDPI-UI"
-CONFIGS_REPO_NAME = "goodbyeDPI-UI-configs"
+# Update source of this fork: the GitHub repository ("owner/name") whose releases the
+# in-app updater checks and downloads. This is the ONLY place it is defined.
+# While it is empty the updater is disabled: no update check and no update download
+# is requested from any repository. Example: UPDATE_REPO = "your-name/goodbyedpi-ui"
+UPDATE_REPO = "tenmo2003/goodbyeDPI-UI"
+
+# Derived from UPDATE_REPO, do not edit. Both are empty while UPDATE_REPO is unset or malformed.
+REPO_OWNER, REPO_NAME = UPDATE_REPO.strip().strip("/").split("/") \
+    if UPDATE_REPO.strip().strip("/").count("/") == 1 else ("", "")
+
+# Repository with the engine (component) configs, presets and strategies which are
+# downloaded when a component is installed. Not related to application updates.
+CONFIGS_REPO = "Storik4pro/goodbyeDPI-UI-configs"
 
 BLACKLIST_PROVIDERS = {
     "thenewone":"https://p.thenewone.lol/domains-export.txt",

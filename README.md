@@ -1,37 +1,63 @@
 ![icon](https://github.com/user-attachments/assets/e67c903c-e649-4560-8483-3d0bde4d1e0f)
 
-Добро пожаловать в GoodbyeDPI UI! Это пользовательский интерфейс для проектов [goodbyeDPI](https://github.com/ValdikSS/GoodbyeDPI), [zapret](https://github.com/bol-van/zapret) [byeDPI](https://github.com/hufrea/byedpi) и [spoofDPI](https://github.com/xvzc/SpoofDPI)
+Welcome to GoodbyeDPI UI! This is a user interface for the [goodbyeDPI](https://github.com/ValdikSS/GoodbyeDPI), [zapret](https://github.com/bol-van/zapret), [byeDPI](https://github.com/hufrea/byedpi) and [spoofDPI](https://github.com/xvzc/SpoofDPI) projects.
 
-## Описание
+> [!NOTE]
+> This is an English-first fork of [Storik4pro/goodbyeDPI-UI](https://github.com/Storik4pro/goodbyeDPI-UI). See [About this fork](#about-this-fork) for what is different.
 
-GoodbyeDPI UI предоставляет удобный графический интерфейс для управления GoodbyeDPI, Zapret, ByeDPI и SpoofDPI. С его помощью вы можете легко изменять настройки DPI и запускать приложение в трее.
+## Description
+
+GoodbyeDPI UI provides a convenient graphical interface for managing GoodbyeDPI, Zapret, ByeDPI and SpoofDPI. With it you can easily change DPI settings and run the application in the system tray.
 > [!IMPORTANT]
-> Вы уже пользуетесь другими вариантами? Импортируйте настройки из вашего BAT или CMD файла! Нажмите на кнопку `"Загрузить настройки из файла"` на странице Zapret или GoodbyeDPI   
+> Already using other variants? Import the settings from your BAT or CMD file! Click the `"Load settings from file"` button on the Zapret or GoodbyeDPI page
 
-## Установка
+## About this fork
+
+Same application, same engines and tools as upstream. The differences are:
+
+- **Default language is English.** A fresh install starts in English (`language = EN` in `data/settings/settings.ini`). Russian is still available in Settings > Personalization.
+- **The updater does not use the upstream repository.** Application updates are read from the repository set in `UPDATE_REPO` in `src/_data.py`. It is set to `tenmo2003/goodbyeDPI-UI`. While it is empty the application does not check for or download application updates from anywhere.
+- The remaining Russian text in the English localization and this README were translated.
+
+Help, wiki, website and issue links inside the application still point to the upstream project. Engine components (GoodbyeDPI, Zapret, ByeDPI, SpoofDPI) are still downloaded from their own repositories, and their configs from `Storik4pro/goodbyeDPI-UI-configs` (`CONFIGS_REPO` in `src/_data.py`).
+
+### Set your update repo
+
+1. Open `src/_data.py`.
+2. Set `UPDATE_REPO` to your GitHub repository in `owner/name` form, for example:
+
+   ```python
+   UPDATE_REPO = "your-name/goodbyedpi-ui"
+   ```
+
+3. Publish releases in that repository the same way upstream does: the release tag is the version (the `VERSION` value in `src/_data.py`, e.g. `1.2.14`), with a `.cdpipatch` asset for in-app patching and/or a `.zip` asset (`_portable.zip` layout, top-level folder `goodbyeDPI UI/`) for the full update.
+
+Leave `UPDATE_REPO` empty to keep the updater disabled.
+
+## Installation
 
 > [!IMPORTANT]
-> Руководство по установке  теперь находиться на [сайте GoodbyeDPI UI](https://storik4pro.github.io/cdpiui)
+> The upstream installation guide is on the [GoodbyeDPI UI website](https://storik4pro.github.io/cdpiui)
 
-### Требования
+### Requirements
 
-- Windows 10 64bit build 15063 или выше
+- Windows 10 64bit build 15063 or higher
 
 >[!IMPORTANT]
->На Windows 10 версии младше 1809 функция "Просмотр вывода goodbyeDPI" не работает 
+>On Windows 10 versions older than 1809 the "View goodbyeDPI output" feature does not work
 
-### Шаги установки
+### Installation steps
 
-1. Скачайте последнюю версию goodbyeDPI UI используя [страницу релизов](https://github.com/Storik4pro/goodbyeDPI-UI/releases)
-2. Выключите антивирус
-3. Установите goodbyeDPI UI
-4. Добавьте файл goodbyeDPI.exe в список исключений вашего антивируса
-5. Включите антивирус
-6. Поздравляем! Вы завершили установку!
+1. Download the latest version of goodbyeDPI UI from the releases page of this fork's repository (this fork has no published releases until you publish them; see [Set your update repo](#set-your-update-repo))
+2. Turn off your antivirus
+3. Install goodbyeDPI UI
+4. Add the goodbyeDPI.exe file to your antivirus exclusion list
+5. Turn your antivirus back on
+6. Congratulations! You have completed the installation!
 
-## Использование
+## Usage
 ![1](https://github.com/user-attachments/assets/8e97ea96-3cb9-49c8-b5ff-6bc4a8d57a38)
-<details><summary>Больше скриншотов</summary>
+<details><summary>More screenshots</summary>
   
 ![3](https://github.com/user-attachments/assets/f108723e-93ff-4e63-a775-42b2ef6375cb)
 ![4](https://github.com/user-attachments/assets/13f4b1bb-024d-431f-9842-6bb380d1e449)
@@ -40,23 +66,27 @@ GoodbyeDPI UI предоставляет удобный графический �
 </details>
 
 
-1. Запустите приложение.
-2. Выберите движок (zapret/goodbyeDPI)
-3. Выберите регион и настройки DNS.
-4. Нажмите кнопку для запуска или остановки процесса.
-5. Сверните приложение в системный трей
+1. Launch the application.
+2. Choose the engine (zapret/goodbyeDPI)
+3. Choose the region and DNS settings.
+4. Press the button to start or stop the process.
+5. Minimize the application to the system tray
 
-## Автозапуск
+## Autorun
 
-Чтобы добавить приложение в автозапуск, выполните следующие шаги:
+To add the application to autorun, follow these steps:
 
-1. Запустите приложение.
-2. В настройках приложения включите опцию автозапуска.
+1. Launch the application.
+2. Enable the autorun option in the application settings.
 
-## Вклад
+## Contributing
 
-Мы приветствуем вклад в развитие проекта! Если у вас есть идеи или предложения, пожалуйста, создайте issue или pull request.
+Contributions to the project are welcome! If you have ideas or suggestions, please create an issue or a pull request.
 
-## Благодарности
+## Acknowledgements
 
-Особая благодарность [ValdikSS](https://github.com/ValdikSS), [bol-van](https://github.com/bol-van/), [xvzc](https://github.com/xvzc) и [hufrea](https://github.com/hufrea/)
+Special thanks to [ValdikSS](https://github.com/ValdikSS), [bol-van](https://github.com/bol-van/), [xvzc](https://github.com/xvzc) and [hufrea](https://github.com/hufrea/)
+
+## License and attribution
+
+GoodbyeDPI UI is created by [Storik4pro](https://github.com/Storik4pro) and licensed under the [Apache License 2.0](LICENSE). This fork keeps the same license; the changes made in it are listed in [About this fork](#about-this-fork).

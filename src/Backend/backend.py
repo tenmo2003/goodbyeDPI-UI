@@ -509,6 +509,13 @@ class Backend(QObject):
         return VERSION
 
     @Slot(result=str)
+    def get_update_repo_url(self):
+        # Empty string while the update repo is not set (see UPDATE_REPO in _data.py)
+        if not REPO_OWNER or not REPO_NAME:
+            return ""
+        return f"https://github.com/{REPO_OWNER}/{REPO_NAME}"
+
+    @Slot(result=str)
     def getDnsV4(self):
         return settings.settings[KEY]['dns_value']
 
@@ -935,7 +942,7 @@ class Backend(QObject):
         else:
             repo = REPO_NAME
             owner = REPO_OWNER
-        if repo == None or owner == None:
+        if not repo or not owner:
             return self.get_element_loc("list_of_changes_load_failure")
         
         try:
